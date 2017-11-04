@@ -15,7 +15,12 @@ def prepare_data(raw_data: pd.DataFrame) -> pd.DataFrame:
     data_to_use['Prefix'] = data_to_use['Name'].apply(extract_prefix)
     data_to_use = data_to_use.drop('Name', axis=1)
 
-    data_to_use = pd.get_dummies(data_to_use)
+    # print(data_to_use['Prefix'].value_counts())
+
+    data_to_use['Prefix_Mr'] = data_to_use['Prefix'].apply(lambda p: 1 if p == 'Mr' else 0)
+    data_to_use['Prefix_Miss'] = data_to_use['Prefix'].apply(lambda p: 1 if p == 'Miss' else 0)
+    data_to_use['Prefix_Mrs'] = data_to_use['Prefix'].apply(lambda p: 1 if p == 'Mrs' else 0)
+    data_to_use = data_to_use.drop('Prefix', axis=1)
 
     return data_to_use
 
