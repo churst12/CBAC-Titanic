@@ -42,30 +42,12 @@ class ClassifierTestPlotter:
         # print('Data range: ', test_set_dimensions)
         return test_set_dimensions
 
-    # Not currently working well
-    #
-    # def plot_prediction_field(self, classifier):
-    #     test_set_dimensions = self.feature_range()
-    #
-    #     test_parameters = self.data.mean(axis=0).drop(self.target_label)
-    #
-    #     for x_coord in range(test_set_dimensions[0, 0], test_set_dimensions[0, 1] + 1):
-    #         for y_coord in range(test_set_dimensions[1, 0], test_set_dimensions[1, 1] + 1):
-    #             test_parameters[self.x_label] = x_coord
-    #             test_parameters[self.y_label] = y_coord
-    #
-    #             self.plot.scatter(x_coord + 0.1,
-    #                               y_coord,
-    #                               alpha=0.1,
-    #                               c='red' if classifier.predict(test_parameters.values.reshape(1, -1)) == DEAD else 'green')
-    #     plt.show()
-
     def plot_prediction(self, classifier):
         """Uses an SKLearn classifier to classify points and plots prediction"""
         side_plot = plt.subplot(122, title='Predicted')
 
         for _, passenger in self.data.iterrows():
-            side_plot.scatter(passenger[self.x_label] + 0.1,
+            side_plot.scatter(passenger[self.x_label],
                               passenger[self.y_label],
                               c='red' if classifier.predict(passenger.drop(self.target_label).values.reshape(1, -1)) == DEAD else 'green',
                               alpha=0.1)
